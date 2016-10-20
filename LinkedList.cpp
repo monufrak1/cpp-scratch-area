@@ -15,27 +15,27 @@ template <typename T>
 class LinkedList
 {
 public:
-    LinkedList() : m_Head(NULL) {}
+    LinkedList() : m_head(NULL) {}
     ~LinkedList()
     {
         clear();
     }
     
-    LinkedList(const LinkedList<T>& other) 
+    LinkedList(const LinkedList<T>& rhs) 
     {
         // Copy list
-        copyList(other);
+        copyList(rhs);
     }
     
-    LinkedList<T>& operator=(const LinkedList<T>& other)
+    LinkedList<T>& operator=(const LinkedList<T>& rhs)
     {
-        if(this != &other)
+        if(this != &rhs)
         {
             // Clear current list
             clear();
             
-            // Copy other list
-            copyList(other);
+            // Copy rhs list
+            copyList(rhs);
         }
         
         return *this;
@@ -47,15 +47,15 @@ public:
         newNode->data = t;
         newNode->next = NULL;
         
-        if(!m_Head)
+        if(!m_head)
         {
             // List is empty. Add new node at head of list
-            m_Head = newNode;
+            m_head = newNode;
         }
         else
         {
             // Add new node to the end of the list
-            Node<T>* curr = m_Head;
+            Node<T>* curr = m_head;
             while(curr->next)
             {
                 curr = curr->next;
@@ -67,7 +67,7 @@ public:
     
     void remove(T t)
     {
-        Node<T>* curr = m_Head;
+        Node<T>* curr = m_head;
         Node<T>* prev = NULL;
         
         // Find element to delete
@@ -86,8 +86,8 @@ public:
         
         if(curr)
         {
-            if(curr == m_Head)
-                m_Head = m_Head->next;
+            if(curr == m_head)
+                m_head = m_head->next;
             else
                 prev->next = curr->next;
             
@@ -97,7 +97,7 @@ public:
     
     bool search(T t) const
     {
-        Node<T>* curr = m_Head;
+        Node<T>* curr = m_head;
         while(curr)
         {
             if(curr->data == t)
@@ -113,7 +113,7 @@ public:
     {
         stringstream ss;
         
-        Node<T>* curr = m_Head;
+        Node<T>* curr = m_head;
         while(curr)
         {
             ss << curr->data << " ";
@@ -126,7 +126,7 @@ public:
     void clear()
     {
         // Delete all nodes
-        Node<T>* curr = m_Head;
+        Node<T>* curr = m_head;
         while(curr)
         {
             Node<T>* temp = curr;
@@ -135,24 +135,24 @@ public:
             delete temp;
         }
         
-        m_Head = NULL;      
+        m_head = NULL;      
     }
     
 protected:
-    void copyList(const LinkedList<T>& other)
+    void copyList(const LinkedList<T>& rhs)
     {
-        m_Head = NULL;
-        Node<T>* curr = other.m_Head;
+        m_head = NULL;
+        Node<T>* curr = rhs.m_head;
         while(curr)
         {
-            // Add each element from other list
+            // Add each element from rhs list
             add(curr->data);
             curr = curr->next;
         }
     }
     
 protected:
-    Node<T>* m_Head;
+    Node<T>* m_head;
 };
 
 template <typename T>
@@ -171,23 +171,23 @@ class SortedLinkedList : public LinkedList<T>
             newNode->data = t;
             newNode->next = NULL;
             
-            if(!this->m_Head)
+            if(!this->m_head)
             {
                 // List is empty. Add new node at head of list
-                this->m_Head = newNode;
+                this->m_head = newNode;
             }
             else
             {
                 Node<T>* prev = NULL;
-                Node<T>* curr = this->m_Head;
+                Node<T>* curr = this->m_head;
                 while(curr)
                 {
                     if(curr->data >= t)
                     {
-                        if(curr == this->m_Head)
+                        if(curr == this->m_head)
                         {
-                            newNode->next = this->m_Head;
-                            this->m_Head = newNode;
+                            newNode->next = this->m_head;
+                            this->m_head = newNode;
                         }
                         else
                         {
